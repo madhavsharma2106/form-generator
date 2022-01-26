@@ -19,6 +19,11 @@ function Form(props) {
     return () => subscription.unsubscribe && subscription.unsubscribe();
   }, [watch]);
 
+  const submitForm = (data, e) => {
+    e.target.reset();
+    onSubmit(data);
+  };
+
   const renderInputs = () => {
     return template.map((i) => {
       if (
@@ -45,9 +50,11 @@ function Form(props) {
   if (template.length === 0) return null;
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(submitForm)}>
       {renderInputs()}
-      <button type="submit">Submit</button>
+      <button type="submit" className="btn-submit">
+        Submit
+      </button>
     </form>
   );
 }

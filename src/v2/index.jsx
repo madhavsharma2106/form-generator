@@ -13,10 +13,10 @@ export const V2 = () => {
   return (
     <>
       <h1>Form Generator</h1>
-      <Form onSumit={onGeneratorFromSubmit} template={generatorFormTemplate} />
+      <Form onSubmit={onGeneratorFromSubmit} template={generatorFormTemplate} />
 
       <h1>Generated Form</h1>
-      <Form template={dynamicForm} onSumit={onGeneratedFromSubmit} />
+      <Form template={dynamicForm} onSubmit={onGeneratedFromSubmit} />
     </>
   );
 };
