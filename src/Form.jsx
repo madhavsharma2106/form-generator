@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { checkForPreReqs, FORM_CONFIG } from "./utils";
 import Input from "./Input";
@@ -14,7 +14,7 @@ function Form(props) {
     watch,
   } = useForm(FORM_CONFIG);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const subscription = watch();
     return () => subscription.unsubscribe && subscription.unsubscribe();
   }, [watch]);
@@ -25,10 +25,11 @@ function Form(props) {
   };
 
   const renderInputs = () => {
-    return template.map((i) => {
+    return template.map((field) => {
+      // Gaurd Clause that only renderds the input field if the prerequisites are met
       if (
         checkForPreReqs({
-          prereqs: i.prereqs,
+          prereqs: field.prereqs,
           getValues,
           errors,
           touchedFields,
@@ -38,9 +39,9 @@ function Form(props) {
 
       return (
         <Input
-          key={i.name}
-          fieldData={i}
-          error={errors[i.name]}
+          key={field.name}
+          fieldData={field}
+          error={errors[field.name]}
           register={register}
         />
       );

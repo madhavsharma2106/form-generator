@@ -5,19 +5,23 @@ function Input({ fieldData, register, error }) {
   const { type, name, validation, required, title, data } = fieldData;
 
   const text = () => (
-    <input
-      type={type}
-      {...register(name, {
-        validate: validation,
-        required: required,
-      })}
-      placeholder={title}
-    />
+    <>
+      <p className="label"> {title}: </p>
+
+      <input
+        type={type}
+        {...register(name, {
+          validate: validation,
+          required: required,
+        })}
+        placeholder={title}
+      />
+    </>
   );
 
   const dropDown = () => (
     <>
-      {title} :
+      <p className="label"> {title}: </p>
       <select
         type={type}
         {...register(name, {
@@ -46,10 +50,10 @@ function Input({ fieldData, register, error }) {
   };
 
   return (
-    <>
+    <div className="input-wrapper">
       {renderInput()}
-      <p className="error-msg">{error?.message}</p>
-    </>
+      {error && <p className="error-msg">{error.message}</p>}
+    </div>
   );
 }
 
