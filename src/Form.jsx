@@ -12,11 +12,12 @@ function Form() {
     handleSubmit,
     watch,
   } = useForm(FORM_CONFIG);
+
   const onSubmit = (data) => console.log(data);
 
   React.useEffect(() => {
     const subscription = watch();
-    return () => subscription.unsubscribe();
+    return () => subscription.unsubscribe && subscription.unsubscribe();
   }, [watch]);
 
   const renderInputs = () => {

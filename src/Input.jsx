@@ -42,7 +42,7 @@ function Input({ fieldData, register, error }) {
       default:
         return text();
     }
-  };
+  }
 
   return (
     <>
