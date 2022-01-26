@@ -2,3 +2,20 @@
   margin: auto;
   width: 500px;
 }
+
+.route-btns {
+  padding: 30px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.route-btns button {
+  margin-right: 10px;
+}
+
+.error-msg {
+  font-size: 10px;
+  font-style: italic;
+  color: red;
+  margin: 5px 0;
+}

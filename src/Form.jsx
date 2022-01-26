@@ -1,10 +1,11 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { checkForPreReqs, FORM_CONFIG } from "./formUtils";
+import { checkForPreReqs, FORM_CONFIG } from "./utils";
 import Input from "./Input";
-import { template } from "./template";
 
-function Form() {
+function Form(props) {
+  const { template, onSubmit } = props;
+
   const {
     register,
     formState: { errors, touchedFields },
@@ -12,8 +13,6 @@ function Form() {
     handleSubmit,
     watch,
   } = useForm(FORM_CONFIG);
-  
-  const onSubmit = (data) => console.log(data);
 
   React.useEffect(() => {
     const subscription = watch();
@@ -21,7 +20,7 @@ function Form() {
   }, [watch]);
 
   const renderInputs = () => {
-    return template.Fields.map((i) => {
+    return template.map((i) => {
       if (
         checkForPreReqs({
           prereqs: i.prereqs,
@@ -43,11 +42,12 @@ function Form() {
     });
   };
 
+  if (template.length === 0) return null;
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <h1> {template.title} </h1>
       {renderInputs()}
-      <input type="submit" disabled={false} />
+      <button type="submit">Submit</button>
     </form>
   );
 }

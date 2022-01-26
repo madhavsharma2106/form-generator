@@ -1,23 +1,21 @@
-import { useState } from "react";
-import { DynamicForm } from "./DynamicForm.js";
-import Form from "./Form.jsx";
-import { GenerateForm } from "./GenerateForm.jsx";
 import "./App.css";
+import { useNavigate, Routes, Route } from "react-router-dom";
+import { V1 } from "./v1";
+import { V2 } from "./v2";
 
 function App() {
-  const [dynamicForm, setDynamicform] = useState([]);
-  const addToForm = (field) => {
-    setDynamicform([...dynamicForm, field]);
-  };
+  const navigate = useNavigate();
   return (
     <div className="app">
-      <GenerateForm addToForm={addToForm} />
-      <br />
-      <br />
-      <br />
-      <br />
-      {/* <Form /> */}
-      <DynamicForm dynamicForm={dynamicForm} />
+      <div className="route-btns">
+        <button onClick={() => navigate("/")}>View V1</button>
+        <button onClick={() => navigate("/v2")}>View V2</button>
+      </div>
+
+      <Routes>
+        <Route exact path="/" element={<V1 />} />
+        <Route exact path="/v2" element={<V2 />} />
+      </Routes>
     </div>
   );
 }

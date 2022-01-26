@@ -43,12 +43,12 @@ function Input({ fieldData, register, error }) {
       default:
         return text();
     }
-  }
+  };
 
   return (
     <>
       {renderInput()}
-      <p>{error?.message}</p>
+      <p className="error-msg">{error?.message}</p>
     </>
   );
 }

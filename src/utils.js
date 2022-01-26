@@ -5,10 +5,6 @@ export const VALIDATIONS = {
     if (userInput.length >= 5) return true;
     return "Min Length is 5";
   },
-  AGE: function (userInput) {
-    if (userInput > 5 && userInput <= 60) return true;
-    return "The age should be greater than 5";
-  },
   IS_IN: (validInputs) => (userInput) => {
     if (validInputs.includes(userInput)) return true;
     return `The input must be one of ${validInputs.toString()}`;
@@ -16,6 +12,13 @@ export const VALIDATIONS = {
   IS_GREATER_THAN: (num, message) => (userInput) => {
     if (userInput > num) return true;
     return message || `The input must be greater than ${num}`;
+  },
+  IS_BETWEEN: (lowerBound, upperBound, message) => (userInput) => {
+    if (userInput >= lowerBound && userInput <= upperBound) return true;
+    return (
+      message ||
+      `The input must be a value between ${lowerBound} and ${upperBound}`
+    );
   },
 };
 
