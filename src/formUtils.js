@@ -9,11 +9,14 @@ export const VALIDATIONS = {
     if (userInput > 5 && userInput <= 60) return true;
     return "The age should be greater than 5";
   },
-  IS_IN: (validInputs) =>
-    function (userInput) {
-      if (validInputs.includes(userInput)) return true;
-      return `The input must be one of ${validInputs.toString()}`;
-    },
+  IS_IN: (validInputs) => (userInput) => {
+    if (validInputs.includes(userInput)) return true;
+    return `The input must be one of ${validInputs.toString()}`;
+  },
+  IS_GREATER_THAN: (num, message) => (userInput) => {
+    if (userInput > num) return true;
+    return message || `The input must be greater than ${num}`;
+  },
 };
 
 export const PRE_REQ = {
@@ -33,6 +36,7 @@ export const checkForPreReqs = (props) => {
 
   // check if any prereq is invalid
   const errorFound = prereqFields.find((field) => errors[field]);
+  if (errorFound) return false;
 
   const allPreReqsHaveBeenSatisfied = () => {
     let count = 0;
@@ -45,7 +49,6 @@ export const checkForPreReqs = (props) => {
     return count === prereqFields.length;
   };
 
-  if (errorFound) return false;
   if (!allPreReqsHaveBeenSatisfied()) return false;
 
   return true;
@@ -53,4 +56,28 @@ export const checkForPreReqs = (props) => {
 
 export const FORM_CONFIG = {
   mode: "onBlur",
+};
+
+export const sanitizeFormData = (data) => {
+  if (data.dropdownOptions) {
+    data.data = {
+      options: data.dropdownOptions.split(","),
+    };
+    delete data.dropdownOptions;
+  }
+  if (data.reqired) {
+    data.reqired = {
+      value: true,
+      message: "Input fiels is mandatory",
+    };
+  }
+  if (data.reqiredMessage) {
+    data.reqired = {
+      value: true,
+      message: data.reqiredMessage,
+    };
+    delete data.reqiredMessage;
+  }
+
+  return data;
 };

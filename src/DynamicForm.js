@@ -2,9 +2,9 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { checkForPreReqs, FORM_CONFIG } from "./formUtils";
 import Input from "./Input";
-import { template } from "./template";
 
-function Form() {
+export const DynamicForm = ({ dynamicForm }) => {
+  console.log(dynamicForm);
   const {
     register,
     formState: { errors, touchedFields },
@@ -12,7 +12,7 @@ function Form() {
     handleSubmit,
     watch,
   } = useForm(FORM_CONFIG);
-  
+
   const onSubmit = (data) => console.log(data);
 
   React.useEffect(() => {
@@ -21,7 +21,7 @@ function Form() {
   }, [watch]);
 
   const renderInputs = () => {
-    return template.Fields.map((i) => {
+    return dynamicForm.map((i) => {
       if (
         checkForPreReqs({
           prereqs: i.prereqs,
@@ -43,13 +43,13 @@ function Form() {
     });
   };
 
+  if (dynamicForm.length === 0) return null;
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <h1> {template.title} </h1>
+      <h1> This form is generated On The fly</h1>
       {renderInputs()}
       <input type="submit" disabled={false} />
     </form>
   );
-}
-
-export default Form;
+};

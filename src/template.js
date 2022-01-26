@@ -1,3 +1,4 @@
+import { INPUT_TYPE } from "./constants";
 import { COUNTRIES, PRE_REQ, VALIDATIONS } from "./formUtils";
 
 export const template = {
@@ -5,7 +6,7 @@ export const template = {
   Fields: [
     {
       name: "firstName",
-      type: "text",
+      type: INPUT_TYPE.TEXT,
       title: "First Name",
       required: {
         value: true,
@@ -15,7 +16,7 @@ export const template = {
     },
     {
       name: "lastName",
-      type: "text",
+      type: INPUT_TYPE.TEXT,
       title: "Last Name",
       required: {
         value: true,
@@ -25,17 +26,20 @@ export const template = {
     },
     {
       name: "age",
-      type: "number",
+      type: INPUT_TYPE.NUMBER,
       title: "Age",
       required: {
         value: true,
         message: "Employee age is required",
       },
-      validation: VALIDATIONS.AGE,
+      validation: VALIDATIONS.IS_GREATER_THAN(
+        55,
+        "Age Must be greater than 55"
+      ),
     },
     {
       name: "nationality",
-      type: "dropdown",
+      type: INPUT_TYPE.DROPDOWN,
       data: {
         options: COUNTRIES,
       },
@@ -48,7 +52,7 @@ export const template = {
     },
     {
       name: "workplace",
-      type: "number",
+      type: INPUT_TYPE.NUMBER,
       title: "Workplace",
       required: {
         value: true,
@@ -60,7 +64,7 @@ export const template = {
     },
     {
       name: "schoolName",
-      type: "text",
+      type: INPUT_TYPE.TEXT,
       title: "School Name",
       required: {
         value: true,
@@ -84,7 +88,7 @@ export const template = {
     },
     {
       name: "socialSecurityNumber",
-      type: "text",
+      type: INPUT_TYPE.TEXT,
       title: "Social Security Number",
       required: {
         value: true,

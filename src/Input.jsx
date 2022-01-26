@@ -1,4 +1,5 @@
 import React from "react";
+import { INPUT_TYPE } from "./constants";
 
 function Input({ fieldData, register, error }) {
   const { type, name, validation, required, title, data } = fieldData;
@@ -35,9 +36,9 @@ function Input({ fieldData, register, error }) {
 
   const renderInput = () => {
     switch (type) {
-      case "text":
+      case INPUT_TYPE.TEXT:
         return text();
-      case "dropdown":
+      case INPUT_TYPE.DROPDOWN:
         return dropDown();
       default:
         return text();
