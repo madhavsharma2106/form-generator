@@ -10,7 +10,10 @@ export const template = [
       value: true,
       message: "Full Name is Required",
     },
-    validation: VALIDATIONS.FIRST_NAME,
+    validation: VALIDATIONS.IS_LONGER_THAN(
+      2,
+      "Name should be longer than 2 characters"
+    ),
   },
   {
     name: "age",

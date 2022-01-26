@@ -1,9 +1,9 @@
 export const COUNTRIES = ["Choose", "India", "USA"];
 
 export const VALIDATIONS = {
-  FIRST_NAME: function (userInput) {
-    if (userInput.length >= 5) return true;
-    return "Min Length is 5";
+  IS_LONGER_THAN: (num, message) => (userInput) => {
+    if (userInput.length > num) return true;
+    return message || `The input must be longer than ${num} chars`;
   },
   IS_IN: (validInputs) => (userInput) => {
     if (validInputs.includes(userInput)) return true;
@@ -61,26 +61,32 @@ export const FORM_CONFIG = {
   mode: "onBlur",
 };
 
-export const sanitizeFormData = (data) => {
+export const sanitizeField = (data) => {
+  if (data.title) {
+    data.name = toCamelCase(data.title);
+  }
+
   if (data.dropdownOptions) {
     data.data = {
       options: data.dropdownOptions.split(","),
     };
     delete data.dropdownOptions;
   }
-  if (data.reqired) {
-    data.reqired = {
+  if (data.required === "Yes") {
+    data.required = {
       value: true,
-      message: "Input fiels is mandatory",
+      message: data.requiredMessage || "Input fields is mandatory",
     };
   }
-  if (data.reqiredMessage) {
-    data.reqired = {
-      value: true,
-      message: data.reqiredMessage,
+  if (data.required === "No") {
+    data.required = {
+      value: false,
     };
-    delete data.reqiredMessage;
   }
-
+  console.log(data);
   return data;
 };
+
+function toCamelCase(str) {
+  return str[0].toUpperCase() + str.substr(1).toLowerCase();
+}
