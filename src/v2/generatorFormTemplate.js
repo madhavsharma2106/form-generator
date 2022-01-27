@@ -32,7 +32,7 @@ export const generatorFormTemplate = [
       message: "DropDown Values are required",
     },
     prereqs: {
-      type: PRE_REQ.equals(INPUT_TYPE.DROPDOWN),
+      type: PRE_REQ.EQUALS(INPUT_TYPE.DROPDOWN),
     },
   },
 
@@ -53,7 +53,7 @@ export const generatorFormTemplate = [
     title: "Message When Requred field is not filled",
     type: INPUT_TYPE.TEXT,
     prereqs: {
-      required: PRE_REQ.equals("Yes"),
+      required: PRE_REQ.EQUALS("Yes"),
     },
   },
   {

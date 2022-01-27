@@ -19,8 +19,7 @@ function Form(props) {
     return () => subscription.unsubscribe && subscription.unsubscribe();
   }, [watch]);
 
-  const submitForm = (data, e) => {
-    e.target.reset();
+  const submitForm = (data) => {
     onSubmit(data);
   };
 

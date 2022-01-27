@@ -23,37 +23,48 @@ export const VALIDATIONS = {
 };
 
 export const PRE_REQ = {
-  greaterThan: (num) => (userInput) => userInput >= num,
-  lesserThan: (num) => (userInput) => userInput < num,
-  equals: (text) => (userInput) => userInput === text,
+  GREATER_THAN: (num) => (userInput) => userInput >= num,
+  LESSER_THAN: (num) => (userInput) => userInput < num,
+  EQUALS: (text) => (userInput) => userInput === text,
 };
 
 // return true if all prereqs are satisfied
 export const checkForPreReqs = (props) => {
   const { prereqs, getValues, errors, touchedFields } = props;
 
-  // If no prereqs
+  /**
+   * STEP 1: See if there are any PreReqs for this field
+   * Return true if none.
+   */
   if (!prereqs) return true;
 
+  /**
+   * STEP 2: See if the PreRequired Fields themselves are valid
+   * Return false if an invalid field is found.
+   */
   const prereqFields = Object.keys(prereqs);
-
-  // check if any prereq is invalid
   const errorFound = prereqFields.find((field) => errors[field]);
   if (errorFound) return false;
 
+  /**
+   * STEP 3: Check if Pre Required Conditions are met.
+   * return false if any one is not met.
+   */
   const allPreReqsHaveBeenSatisfied = () => {
     let count = 0;
     for (let field in prereqs) {
-      // If the field is not touched,.
+      // If the field is not touched.
       if (!touchedFields[field]) break;
       const value = getValues(field);
       if (prereqs[field](value)) count++;
     }
     return count === prereqFields.length;
   };
-
   if (!allPreReqsHaveBeenSatisfied()) return false;
 
+  /**
+   * STEP 4: If all conditions are met, return true
+   */
   return true;
 };
 

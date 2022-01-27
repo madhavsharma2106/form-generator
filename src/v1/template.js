@@ -11,8 +11,8 @@ export const template = [
       message: "Full Name is Required",
     },
     validation: VALIDATIONS.IS_LONGER_THAN(
-      2,
-      "Name should be longer than 2 characters"
+      5,
+      "Name should be longer than 5 characters"
     ),
   },
   {
@@ -47,7 +47,7 @@ export const template = [
       message: "Workplace Name is required",
     },
     prereqs: {
-      age: PRE_REQ.greaterThan(22),
+      age: PRE_REQ.GREATER_THAN(22),
     },
   },
   {
@@ -59,7 +59,16 @@ export const template = [
       message: "School Name is required",
     },
     prereqs: {
-      age: PRE_REQ.lesserThan(18),
+      age: PRE_REQ.LESSER_THAN(18),
+    },
+  },
+  {
+    name: "ssn",
+    type: INPUT_TYPE.NUMBER,
+    title: "Social Security Number",
+    prereqs: {
+      age: PRE_REQ.GREATER_THAN(18),
+      nationality: PRE_REQ.EQUALS("USA"),
     },
   },
 ];

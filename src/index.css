@@ -10,6 +10,7 @@ body {
 
 * {
   color: white;
+  box-sizing: border-box;
 }
 select,
 option,
