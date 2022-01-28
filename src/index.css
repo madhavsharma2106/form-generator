@@ -5,11 +5,12 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: black;
+  background-color: #3f3f3f;
 }
 
 * {
   color: white;
+  box-sizing: border-box;
 }
 select,
 option,
@@ -18,8 +19,8 @@ input {
   color: black;
 }
 
-input {
-  width: 100%;
+button {
+  cursor: pointer;
 }
 
 code {

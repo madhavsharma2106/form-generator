@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { checkForPreReqs, FORM_CONFIG } from "./formUtils";
+import { checkForPreReqs, FORM_CONFIG } from "./utils";
 import Input from "./Input";
-import { template } from "./template";
 
-function Form() {
+function Form(props) {
+  const { template, onSubmit } = props;
+
   const {
     register,
     formState: { errors, touchedFields },
@@ -13,18 +14,21 @@ function Form() {
     watch,
   } = useForm(FORM_CONFIG);
 
-  const onSubmit = (data) => console.log(data);
-
-  React.useEffect(() => {
+  useEffect(() => {
     const subscription = watch();
     return () => subscription.unsubscribe && subscription.unsubscribe();
   }, [watch]);
 
+  const submitForm = (data) => {
+    onSubmit(data);
+  };
+
   const renderInputs = () => {
-    return template.Fields.map((i) => {
+    return template.map((field) => {
+      // Gaurd Clause that only renderds the input field if the prerequisites are met
       if (
         checkForPreReqs({
-          prereqs: i.prereqs,
+          prereqs: field.prereqs,
           getValues,
           errors,
           touchedFields,
@@ -34,20 +38,23 @@ function Form() {
 
       return (
         <Input
-          key={i.name}
-          fieldData={i}
-          error={errors[i.name]}
+          key={field.name}
+          fieldData={field}
+          error={errors[field.name]}
           register={register}
         />
       );
     });
   };
 
+  if (template.length === 0) return null;
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <h1> {template.title} </h1>
+    <form onSubmit={handleSubmit(submitForm)}>
       {renderInputs()}
-      <input type="submit" disabled={false} />
+      <button type="submit" className="btn-submit">
+        Submit
+      </button>
     </form>
   );
 }
